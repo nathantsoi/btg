@@ -1,8 +1,8 @@
 # Bridging the Gap: Unifying the Training and Evaluation of Neural Network Binary Classifiers
 
-Project Webpage: [btg.nathantsoi.com](https://btg.nathantsoi.com)
+Project Webpage: [btg.yale.edu](https://btg.yale.edu)
 
-[PDF Paper](https://btg.nathantsoi.com/papers/Bridging_the_Gap_Unifying_the_Training_and_Evaluation_of_Neural_Network_Binary_Classifiers.pdf)
+[PDF Paper](https://btg.yale.edu/papers/Bridging_the_Gap_Unifying_the_Training_and_Evaluation_of_Neural_Network_Binary_Classifiers.pdf)
 
 Citation:
 
