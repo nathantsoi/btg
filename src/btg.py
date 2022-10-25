@@ -1,5 +1,5 @@
 import torch
-from confusion import confusion, sig, linear_approx, fbeta, kl, bce
+from confusion import confusion, sig, linear_approx, fbeta, kl, bce, EPS
 
 def mean_fbeta_approx_loss_on(device, thresholds=torch.arange(0.1, 1, 0.1), beta=1, approx=linear_approx(), class_weight=None):
     print(f"mean_fbeta_approx_loss_on beta: '{beta}'")
