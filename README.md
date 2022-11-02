@@ -110,6 +110,8 @@ To incorporate this code with your project:
 
 - Create an instance of your desired launch function. For example, for F1-Score: `criterion = mean_fbeta_approx_loss_on(device)` or for Accuracy: `criterion = mean_accuracy_approx_loss_on(device)`
 
+- BtG losses expect network output in the [0,1] range. Typically, a Sigmoid activated final network layer should be used.
+
 - Train as normal using criterion to compute your loss. Here is an abbreviated example from [the PyTorch docs](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html#train-the-network):
   ```
   for epoch in range(2):
