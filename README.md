@@ -15,7 +15,7 @@ Citation:
 }
 ```
 
-> If you would like to use a BtG loss in your research, simply install the pypi package: `pip install torch-btg`, import the desired loss such as F1-Score loss `from torch_btg.loss import f1_loss`, and optimize as usual after setting the `criterion = fb_loss(beta=1.0)`.
+> If you would like to use a BtG loss in your research, simply install [the pypi package](https://pypi.org/project/torch-btg/): `pip install torch-btg`, import the desired loss such as F1-Score loss `from torch_btg.loss import f1_loss`, and optimize as usual after setting the `criterion = fb_loss(beta=1.0)`.
 
 ## Dependencies
 
