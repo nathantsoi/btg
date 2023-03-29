@@ -7,13 +7,15 @@ Project Webpage: [btg.yale.edu](https://btg.yale.edu)
 Citation:
 
 ```
-@article{tsoi2022btg,
-  author        = {Tsoi, Nathan and Candon, Kate and Li, Deyuan and Milkessa, Yofti and V\'{a}zquez, Marynel},
+@inproceedings{tsoi2022bridging,
   title         = {Bridging the Gap: Unifying the Training and Evaluation of Neural Network Binary Classifiers},
-  journal       = {Advances in Neural Information Processing Systems},
+  author        = {Tsoi, Nathan and Candon, Kate and Li, Deyuan and Milkessa, Yofti and V{\'a}zquez, Marynel},
+  booktitle     = {Advances in Neural Information Processing Systems},
   year          = {2022}
 }
 ```
+
+> If you would like to use a BtG loss in your research, simply install the pypi package: `pip install torch-btg`, import the desired loss such as F1-Score loss `from torch_btg.loss import f1_loss`, and optimize as usual after setting the `criterion = fb_loss(beta=1.0)`.
 
 ## Dependencies
 
@@ -87,39 +89,3 @@ Run Jupyter Lab:
 # start the jupyter lab server
 jupyter lab --ip 0.0.0.0 --no-browser --notebook-dir notebooks
 ```
-
-Then, open your browser to [http://127.0.0.1:8888](http://127.0.0.1:8888) and run the `results.ipynb` notebook.
-
-## Integrate with Your PyTorch Project
-
-We welcome the use of our code under the included BSD 3-Clause "New" or "Revised" License.
-
-To incorporate this code with your project:
-
-- Copy the following two files into your project:
-
-  - [confusion.py](src/confusion.py)
-
-  - [btg.py](src/btg.py)
-
-- Import the relevant helpers into your `main.py` or file with the training loop:
-
-  ```
-  from btg import mean_fbeta_approx_loss_on, mean_accuracy_approx_loss_on, mean_auroc_approx_loss_on
-  ```
-
-- Create an instance of your desired launch function. For example, for F1-Score: `criterion = mean_fbeta_approx_loss_on(device)` or for Accuracy: `criterion = mean_accuracy_approx_loss_on(device)`
-
-- BtG losses expect network output in the [0,1] range. Typically, a Sigmoid activated final network layer should be used.
-
-- Train as normal using criterion to compute your loss. Here is an abbreviated example from [the PyTorch docs](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html#train-the-network):
-  ```
-  for epoch in range(2):
-    for i, data in enumerate(trainloader, 0):
-      inputs, labels = data
-      optimizer.zero_grad()
-      outputs = net(inputs)
-      loss = criterion(outputs, labels)
-      loss.backward()
-      optimizer.step()
-  ```

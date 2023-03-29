@@ -27,8 +27,10 @@ from ignite.contrib.metrics import ROC_AUC
 from ap_perf import PerformanceMetric, MetricLayer
 from ap_perf.metric import CM_Value
 
-from btg import mean_fbeta_approx_loss_on, mean_accuracy_approx_loss_on, mean_auroc_approx_loss_on
-from confusion import sig, linear_approx, fbeta, kl, bce
+from torch_btg.loss import fb_loss, accuracy_loss, auroc_loss
+from torch_btg.loss import mean_fbeta_approx_loss_on, mean_accuracy_approx_loss_on, mean_auroc_approx_loss_on
+from torch_btg.confusion import sig, linear_approx
+from torch_btg.metric import fb, kl, bce
 
 import copy
 import logging
@@ -386,10 +388,11 @@ def train(args):
         criterion = MetricLayer(f1_score).to(device)
     elif args.loss in ['approx-f1', 'approx-f2', 'approx-f3'] :
         beta = int(args.loss.split('-')[-1][-1])
-        criterion = mean_fbeta_approx_loss_on(device, thresholds=thresholds, beta=beta, class_weight=class_weight)
+        criterion_has_cm = True
+        criterion = fb_loss(beta=beta, device=device, class_weight=class_weight)
         criterion_has_cm = True
     elif args.loss == 'approx-accuracy':
-        criterion = mean_accuracy_approx_loss_on(device, thresholds=thresholds, class_weight=class_weight)
+        criterion = accuracy_loss(device, class_weight=class_weight)
         criterion_has_cm = True
     elif args.loss in ['approx-f1-sig', 'approx-f2-sig', 'approx-f3-sig'] :
         beta = int(args.loss.split('-')[1][-1])
@@ -399,7 +402,7 @@ def train(args):
         criterion = mean_accuracy_approx_loss_on(device, thresholds=thresholds, approx=sig(k=10), class_weight=class_weight)
         criterion_has_cm = True
     elif args.loss == 'approx-auroc':
-        criterion = mean_auroc_approx_loss_on(device, thresholds=thresholds, class_weight=class_weight)
+        criterion = auroc_loss(device, class_weight=class_weight)
         criterion_has_cm = True
     elif args.loss == 'approx-auroc-sig':
         criterion = mean_auroc_approx_loss_on(device, thresholds=thresholds, approx=sig(k=10), class_weight=class_weight)
@@ -583,9 +586,9 @@ def train(args):
                 p_i = torch.hstack(p_i).to(device)
                 q_i = torch.hstack(q_i).to(device)
                 test_bces = bce(p_i, q_i)
-                test_f1s = fbeta(p_i, q_i, thresholds).nansum()
-                test_f1ls = fbeta(p_i, q_i, thresholds, approx=linear_approx()).nansum()
-                test_f1ss = fbeta(p_i, q_i, thresholds, approx=sig(k=10)).nansum()
+                test_f1s = fb(p_i, q_i, thresholds).nansum()
+                test_f1ls = fb(p_i, q_i, thresholds, approx=linear_approx()).nansum()
+                test_f1ss = fb(p_i, q_i, thresholds, approx=sig(k=10)).nansum()
                 #import pdb; pdb.set_trace();1
                 # compare f1 (p) to bce (q)
                 plot_histograms(device, writer, test_f1s, test_bces, epoch, 'f1_vs_bce', 'test')

@@ -46,3 +46,4 @@ RUN pip3 install \
   imbalanced-learn \
   pandas jupyterlab matplotlib seaborn
 RUN pip3 install numpy --upgrade
+RUN pip3 install torch-btg==0.0.1
