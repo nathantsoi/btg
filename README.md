@@ -1,5 +1,19 @@
 # Bridging the Gap: Unifying the Training and Evaluation of Neural Network Binary Classifiers
 
+## To use a BtG loss in your research:
+
+- Install the torch-btg package
+```
+pip install torch-btg
+```
+
+- Then import and use the desired loss in your Python code:
+```
+from torch_btg.loss import fb_loss
+...
+criterion = fb_loss(beta=1.0)
+```
+
 Project Webpage: [btg.yale.edu](https://btg.yale.edu)
 
 [PDF Paper](https://btg.yale.edu/papers/Bridging_the_Gap_Unifying_the_Training_and_Evaluation_of_Neural_Network_Binary_Classifiers.pdf)
@@ -15,11 +29,11 @@ Citation:
 }
 ```
 
-> If you would like to use a BtG loss in your research, simply install [the pypi package](https://pypi.org/project/torch-btg/): `pip install torch-btg`, import the desired loss such as F1-Score loss `from torch_btg.loss import f1_loss`, and optimize as usual after setting the `criterion = fb_loss(beta=1.0)`.
+## Paper Results
 
-## Dependencies
+The following instructions can be used to reproduce the results from the paper.
 
-This project was tested using [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) on an Ubuntu 18.04 machine with an NVIDIA  GPU.
+This project was tested using [nvidia-docker](https://github.com/NVIDIA/nvidia-docker) on an Ubuntu 18.04 machine with an NVIDIA GPU.
 
 ## Setup
 
